@@ -1,0 +1,97 @@
+# Open decisions and launch blockers
+
+Things only the founder can supply or decide. Ordered by how much they block.
+
+## Must have before sharing a real distributor link
+
+1. **Official BF Suma Kenya catalogue.** Every product in `src/engine/catalogue.ts` is
+   `verified: false`. We need, per product: exact name, pack size, full ingredients, label dose,
+   manufacturer warnings, current retail price. Pay special attention to:
+   - ArthroXtra: is the chondroitin from pork? Is the glucosamine from shellfish?
+   - The 4 in 1 coffees: do they contain sugar and creamer? Is there a sugar-free version?
+   - Relivin Tea: listings disagree on ingredients (herbal only, or green tea?). Caffeine matters.
+   - ProstatRelax, XPower Man Plus, Novel Depile: full ingredient lists are missing.
+   - Products we haven't included that should be (and any we included that are discontinued).
+2. **Pharmacist review of `src/engine/safety.ts`.** The rules are conservative general guidance,
+   not a clinical interaction database.
+3. **Suppli Afya support number.** Pro promises priority WhatsApp help. Decide the number and set
+   `NEXT_PUBLIC_SUPPLI_WHATSAPP` (format `2547XXXXXXXX`); nothing on the site uses it yet.
+4. **Domain.** The site assumes `suppliafya.co.ke`. Set `NEXT_PUBLIC_SITE_URL` to the real one; QR codes
+   encode this URL and cards show its domain. Until it's set, a Vercel deploy uses its own address.
+5. **Legal review** of `/privacy`, the disclaimers in the footer and the health check, and ODPC
+   registration. The portal now stores customers' health check answers when they choose to send
+   them to a distributor, so this is required before real distributors sign up.
+6. **Prices.** The plans in `src/config/plans.ts` are a proposal (KES 1,500 / 2,900 / 4,900).
+7. **Production database.** Set `DATABASE_URL` to a hosted Postgres. The embedded database is for
+   local development only; on Vercel, pages that need the database fail with a clear error until
+   `DATABASE_URL` is set. With Supabase, use the transaction pooler (port 6543): Vercel can't reach
+   the direct connection, which is IPv6 only.
+8. **Payment keys.** Without keys, checkout runs in test mode (approve or decline on screen), which
+   is allowed only outside production or with `PAYMENTS_ALLOW_TEST=true`. **Never set that on the
+   live site.** For live payments:
+   - M-Pesa (STK Push through **PayHero**): from the PayHero dashboard, `PAYHERO_API_USERNAME` and
+     `PAYHERO_API_PASSWORD` (API Keys; or the ready-made `PAYHERO_AUTH_TOKEN` instead) and
+     `PAYHERO_CHANNEL_ID` (Payment Channels → My Payment Channels: the Till, Paybill or bank account
+     the money goes to). Nothing to configure for the callback: each prompt carries
+     `<site>/api/payments/payhero/callback?token=…`, with a secret derived from the credentials
+     (override with `PAYHERO_CALLBACK_TOKEN`). `NEXT_PUBLIC_SITE_URL` must be the public https URL.
+     Then run `npm run payhero:check -- 07XXXXXXXX` to send yourself a KES 1 prompt end to end.
+   - Card (Paystack, KES): `PAYSTACK_SECRET_KEY`. In the Paystack dashboard set the webhook URL to
+     `<site>/api/payments/paystack/webhook`.
+9. **Community link.** Set `NEXT_PUBLIC_COMMUNITY_URL` to the WhatsApp community invite. Until then
+   the portal doesn't show the invite.
+
+10. **Morning reminder (optional).** Generate VAPID keys (`npx web-push generate-vapid-keys`), set
+    `NEXT_PUBLIC_VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, `VAPID_SUBJECT` and a random `CRON_SECRET`.
+    `vercel.json` runs `/api/cron/morning` at 05:00 UTC (08:00 in Nairobi). Until the keys are set, the
+    reminder simply doesn't appear.
+
+11. **Storefront orders (optional).** Set the same random `STOREFRONT_SECRET` here and in the
+    distributor storefront (`suppli_afya-distributor_template`), with its `SUPPLI_AFYA_URL` pointing
+    here. Orders customers place on a live storefront with a `suppliSlug` then arrive through
+    `/api/storefront/orders` in that distributor's Orders and on Today. Until it's set, the endpoint
+    refuses everything and customers order on WhatsApp.
+
+## Decisions to make during the pilot
+
+- **Automatic renewal.** Today every month is paid by hand (M-Pesa or card). Decide after the pilot
+  whether card payers want automatic renewal.
+- **Phone sign-in.** Accounts use email and password. Decide whether to add phone OTP.
+- **Which distributors first.** Recommend 5–10 who already sell actively on WhatsApp, including
+  at least one with a Till or Paybill and one without.
+- **BF Suma relationship.** Whether to approach the company, and when. Check distributor policy
+  on third-party tools, online price communication and use of product names.
+- **Testimonials.** The site has none, on purpose. Add real quotes and real numbers from pilot
+  distributors, with permission. Never invent them.
+- **Swahili.** Whether the customer-facing health check should offer Swahili from day one.
+- **Kids.** Whether to build a "for my child" flow for the Smart Kids range.
+
+## Decisions already made (and why)
+
+- **The website speaks to distributors; the health check speaks to customers.** The business is
+  B2B. The check is the distributor's tool, and the best way to sell it is to let distributors try it.
+- **WhatsApp handoff via `wa.me` links, no email capture.** Zero cost, works on every phone, matches
+  how distributors already sell.
+- **Pregnancy means no product plan.** Clinic first, even if it costs a sale.
+- **No product photos or BF Suma branding.** Independence has to be visible.
+- **Demo distributor has no WhatsApp number.** The demo never opens a chat to a real person.
+- **Public pricing, pay before setup.** Asked for by the founder: pricing → account → payment → setup
+  → portal. A failed payment keeps the account and offers a retry; returning users never see setup again.
+- **No product-categories step in onboarding.** Every distributor can sell the full range, so the
+  answer wouldn't change anything in the portal. Add it only when something uses it.
+- **"Independent distributor" business type, and a WhatsApp number in onboarding.** Most
+  distributors don't have a shop, and the health check link needs a number to send plans to.
+- **PayHero for M-Pesa, not Daraja directly.** PayHero handles the Safaricom side and settles to
+  any Till, Paybill or bank channel. Each M-Pesa confirmation is double-checked against PayHero's
+  status API, polling covers a missing callback, a late confirmation still activates the plan, and one
+  account can send at most 5 prompts in 15 minutes (PayHero pauses accounts with many failed prompts).
+- **The portal is an installable app (PWA), not an app-store app.** No store approval, instant updates, one
+  codebase. iPhones need Share → Add to Home Screen (Apple offers no install button), and the installed app
+  keeps its own login on iPhone, so we tell people they'll log in once.
+- **Offline is read-first.** Portal pages you've opened are kept on the phone and open without signal;
+  saves wait and retry when the connection returns (while the app is open). We don't queue saves across app
+  restarts: a half-synced order is worse than a clear "you're offline".
+- **One notification a day, at most.** The morning reminder only fires when someone needs the distributor,
+  says who first, and never asks for permission until they turn it on.
+- **Onboarding goals shape the Today list.** The goals a distributor picks decide which kind of
+  follow-up comes first.
