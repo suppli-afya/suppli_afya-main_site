@@ -1,24 +1,19 @@
 import { Nav } from "@/components/site/Nav";
 import { Hero } from "@/components/site/Hero";
 import { Problem } from "@/components/site/Problem";
-import { Journey } from "@/components/site/Journey";
-import { YourPage } from "@/components/site/YourPage";
+import { HowItWorks } from "@/components/site/HowItWorks";
 import { Demo } from "@/components/site/Demo";
-import { Trust } from "@/components/site/Trust";
 import { Workspace } from "@/components/site/Workspace";
-import { Share } from "@/components/site/Share";
-import { FollowUp } from "@/components/site/FollowUp";
-import { Pricing } from "@/components/site/Pricing";
 import { Faq } from "@/components/site/Faq";
-import { FinalCta, Footer } from "@/components/site/Footer";
+import { Pricing } from "@/components/site/Pricing";
+import { Footer } from "@/components/site/Footer";
 import { MobileCta } from "@/components/site/MobileCta";
 
 /**
- * The story is the distributor's customer journey, front door first: your page → why interest
- * gets lost → the whole journey, one customer from scan to reorder → the page itself → try it →
- * why it's safe → what the workspace remembers → where to share the page → keeping customers
- * after the first sale → what it costs → questions.
- * Suppli Afya's customer is the distributor; the page is how it serves them.
+ * Seven sections, one decision. The promise (your own page) → the pain it removes → how it works,
+ * in three steps → proof: try the real thing, and what you can trust → the second layer, kept
+ * light: it remembers every customer → the questions that stop people → the offer, on one card.
+ * The page leads with the simplest version of the offer and lets the depth show up when it's needed.
  */
 export default function Home() {
   return (
@@ -27,16 +22,11 @@ export default function Home() {
       <main>
         <Hero />
         <Problem />
-        <Journey />
-        <YourPage />
+        <HowItWorks />
         <Demo />
-        <Trust />
         <Workspace />
-        <Share />
-        <FollowUp />
-        <Pricing />
         <Faq />
-        <FinalCta />
+        <Pricing />
       </main>
       <Footer />
       <MobileCta />

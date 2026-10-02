@@ -6,7 +6,6 @@ import { useState } from "react";
 import { Plus } from "@/components/ui/icons";
 import { Reveal } from "@/components/ui/Reveal";
 import { keepTogether } from "@/components/ui/KeepTogether";
-import { KATE } from "./story";
 
 const FAQ = [
   {
@@ -15,11 +14,7 @@ const FAQ = [
   },
   {
     q: "Who owns the customer relationship?",
-    a: "You do. Customers come through your page, message your WhatsApp and buy from you. Suppli Afya never contacts your customers, never sells to them and never passes them to other distributors. If you leave, your customer list goes with you.",
-  },
-  {
-    q: "What happens to my customers' information?",
-    a: "Nothing leaves a customer's phone until they choose to send it to you. When they do, their answers and plan are saved in your workspace so you can help them, and nobody else sees them. We don't sell it or use it for anything else. The privacy page explains it in full.",
+    a: "You do. Customers come through your page, message your WhatsApp and buy from you. Suppli Afya never contacts your customers, never sells to them and never passes them to other distributors.",
   },
   {
     q: "Does my customer need an app?",
@@ -30,28 +25,12 @@ const FAQ = [
     a: "The assessment asks about goals, daily routine and health, including medicine, allergies and pregnancy. It matches the answers against the BF Suma range, leaves out anything that doesn't suit that person and explains each suggestion in plain words. It's help choosing products, not a diagnosis, and it tells people plainly when something should be checked by a doctor first.",
   },
   {
-    q: "What happens after someone finishes the assessment?",
-    a: "They see their suggestions, with the reasons, and a button to talk it through with you. If they tap it, WhatsApp opens with their answers already written in, and they're saved in your workspace as a new enquiry.",
-  },
-  {
-    q: "How does WhatsApp fit in?",
-    a: "Your page sends customers to your own WhatsApp number, the one you already use. There's no WhatsApp Business setup and nothing is sent in your name. From your workspace, follow-up messages open in WhatsApp ready to send, and you press send.",
-  },
-  {
     q: "How do customers pay?",
     a: "They pay you directly, by M-Pesa, cash or however you already work. Suppli Afya never holds your money. Record each payment against its order with the M-Pesa code, and anything still owed stays on your list until it's in. Sending M-Pesa payment requests straight to a customer's phone is coming to the Pro plan.",
   },
   {
     q: "Do I need to be good with computers?",
     a: "No. If you can use WhatsApp and M-Pesa, you can use Suppli Afya. It runs on your phone, and the part your customers see is just as simple.",
-  },
-  {
-    q: "How much does it cost?",
-    a: "Starter is KES 1,500, Growth is KES 2,900 and Pro is KES 4,900 a month. You pay each month by M-Pesa or card. Nothing is taken automatically, so there's nothing to cancel: if you stop renewing, your plan simply ends.",
-  },
-  {
-    q: "Can I try it before paying?",
-    a: `Yes. The assessment on ${KATE.first}'s example page is the real one your customers will use, so you can see exactly what they get. Your own page and workspace open once you've chosen a plan.`,
   },
   {
     q: "Can I use it for other brands?",
@@ -62,7 +41,7 @@ const FAQ = [
 export function Faq() {
   const [open, setOpen] = useState<number | null>(0);
   return (
-    <section id="faq" className="border-t border-ink/10 py-24 sm:py-32">
+    <section id="faq" className="py-24 sm:py-28">
       <div className="container-x grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
         <Reveal>
           <div className="eyebrow">Questions</div>

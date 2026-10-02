@@ -1,11 +1,9 @@
 import clsx from "clsx";
 import { Reveal } from "@/components/ui/Reveal";
 
-const CHANNELS = ["Your WhatsApp status", "Instagram", "Facebook", "A friend of a customer", "Chama", "The shop counter"];
-
 /** The walk-through every curious person needs, typed out by hand, and how it usually ends. */
 const THREAD: { from: "them" | "you" | "gap"; text: string; time?: string }[] = [
-  { from: "them", text: "Hi, what do you have for energy?", time: "7:42 pm" },
+  { from: "them", text: "Hi, which one should I take for energy?", time: "7:42 pm" },
   { from: "you", text: "Hi! What are you looking for exactly?", time: "8:30 pm" },
   { from: "you", text: "Have you used anything before? Any medicine I should know about?" },
   { from: "them", text: "Not really. Just tired all the time" },
@@ -16,79 +14,68 @@ const THREAD: { from: "them" | "you" | "gap"; text: string; time?: string }[] = 
   { from: "you", text: "Hi, still interested?" },
 ];
 
+/** What happens to most enquiries today, one line each so it can be read at a glance. */
+const LEAKS = [
+  { title: "You answer the same questions by hand", body: "What they're looking for, what they've tried, whether they take any medicine." },
+  { title: "You send photos and price lists", body: "They compare on their own and say they'll think about it." },
+  { title: "The chat waits while you're busy", body: "Delivering, at work, asleep. By the time you reply, they've moved on." },
+  { title: "Nobody remembers to follow up", body: "There's no list of who asked, so it never looks like a lost sale. Just a slow month." },
+];
+
 export function Problem() {
   return (
-    <section id="problem" className="bg-paper py-24 sm:py-32">
-      <div className="container-x grid grid-cols-1 gap-14 lg:grid-cols-[1.05fr_0.95fr] lg:gap-20">
+    <section id="problem" className="bg-paper py-24 sm:py-28">
+      <div className="container-x grid grid-cols-1 items-center gap-14 lg:grid-cols-[1.05fr_0.95fr] lg:gap-20">
         <div>
           <Reveal>
             <div className="eyebrow">How it usually goes</div>
-            <h2 className="display-lg mt-5 max-w-[16ch] text-ink">People are curious. Getting them to buy is all on you.</h2>
+            <h2 className="display-lg mt-5 max-w-[16ch] text-ink">“Which one should I take?” is where most sales get lost</h2>
           </Reveal>
-          <div className="prose-big mt-10 grid gap-7 text-ink">
-            <Reveal delay={0.05}>
-              <p>
-                Someone replies to your status asking what&apos;s good for energy. A customer&apos;s sister wants to know
-                if the coffee has sugar in it. Interest turns up everywhere.
-              </p>
-            </Reveal>
-            <Reveal delay={0.1}>
-              <p className="text-ink-soft">
-                Every one of those people needs the same walk-through before they buy: what they&apos;re looking for,
-                what they&apos;ve tried, which product, how much. Only you can give it, one chat at a time, and when
-                you&apos;re busy or delivering, the chat waits. A lot of them never come back to it.
-              </p>
-            </Reveal>
-            <Reveal delay={0.15}>
-              <p>
-                None of that shows up as a lost sale. It just looks like a <em className="text-clay">slow month.</em>
-              </p>
-            </Reveal>
-          </div>
-          <Reveal delay={0.1} className="mt-10">
-            <ul className="flex flex-wrap gap-2" aria-label="Where interest comes from">
-              {CHANNELS.map((c) => (
-                <li key={c} className="rounded-full border border-ink/15 px-3 py-1.5 text-[0.85rem] text-ink-soft">
-                  {c}
-                </li>
-              ))}
-            </ul>
-          </Reveal>
+          <ol className="mt-10 grid gap-5">
+            {LEAKS.map((l, i) => (
+              <Reveal as="li" key={l.title} delay={0.04 * i} className="grid grid-cols-[2rem_1fr] gap-4">
+                <span className="mt-0.5 grid h-7 w-7 place-items-center rounded-full border border-clay/40 text-[0.8rem] font-semibold text-clay">
+                  {i + 1}
+                </span>
+                <div>
+                  <h3 className="text-[1.08rem] font-semibold leading-snug text-ink">{l.title}</h3>
+                  <p className="mt-0.5 text-[0.98rem] leading-relaxed text-ink-soft">{l.body}</p>
+                </div>
+              </Reveal>
+            ))}
+          </ol>
         </div>
 
         <Reveal delay={0.1}>
-          <figure className="mx-auto max-w-[26rem] overflow-hidden rounded-[1.75rem] bg-wa-bg shadow-float ring-1 ring-ink/10 lg:mt-24">
+          <figure className="mx-auto max-w-[26rem] overflow-hidden rounded-[1.75rem] bg-wa-bg shadow-float ring-1 ring-ink/10">
             <div className="flex items-center gap-2.5 bg-wa-deep px-4 py-3 text-white">
               <span className="grid h-8 w-8 place-items-center rounded-full bg-[#dfe5e7] text-[0.8rem] font-semibold text-wa-deep">?</span>
               <span className="leading-tight">
                 <span className="block text-[0.9rem] font-semibold">+254 7•• ••• 318</span>
-                <span className="block text-[0.7rem] text-white/70">last seen 3 days ago</span>
+                <span className="block text-[0.72rem] text-white/70">last seen 3 days ago</span>
               </span>
             </div>
             <ol className="grid gap-1.5 px-3 py-4" aria-label="A typical chat with someone who asked about a product">
               {THREAD.map((m, i) =>
                 m.from === "gap" ? (
-                  <li key={i} className="mx-auto my-1 w-fit rounded-md bg-white/80 px-2.5 py-0.5 text-[0.7rem] text-[#54656f] shadow-sm">
+                  <li key={i} className="mx-auto my-1 w-fit rounded-md bg-white/80 px-2.5 py-0.5 text-[0.72rem] text-[#54656f] shadow-sm">
                     {m.text}
                   </li>
                 ) : (
                   <li
                     key={i}
                     className={clsx(
-                      "max-w-[82%] rounded-lg px-3 py-1.5 text-[0.84rem] leading-snug text-[#111b21] shadow-sm",
+                      "max-w-[82%] rounded-lg px-3 py-1.5 text-[0.86rem] leading-snug text-[#111b21] shadow-sm",
                       m.from === "you" ? "ml-auto rounded-tr-none bg-wa-bubble" : "rounded-tl-none bg-white",
                     )}
                   >
                     {m.text}
-                    {m.time && <span className="ml-2 align-bottom text-[0.62rem] text-[#54656f]">{m.time}</span>}
+                    {m.time && <span className="ml-2 align-bottom text-[0.64rem] text-[#54656f]">{m.time}</span>}
                   </li>
                 ),
               )}
-              <li className="ml-auto pr-1 text-[0.68rem] text-[#54656f]">Seen</li>
+              <li className="ml-auto pr-1 text-[0.7rem] text-[#54656f]">Seen</li>
             </ol>
-            <figcaption className="border-t border-ink/10 bg-paper px-4 py-3 text-[0.85rem] leading-snug text-ink-soft">
-              Now picture that for everyone who asks in a month.
-            </figcaption>
           </figure>
         </Reveal>
       </div>

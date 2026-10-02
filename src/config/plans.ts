@@ -28,6 +28,18 @@ export interface Plan {
   featured?: boolean;
 }
 
+/** What every plan includes. */
+export const EVERY_PLAN = [
+  "Your own page, at your own link",
+  "Printable QR cards",
+  "The assessment and product suggestions",
+  "Every enquiry saved with what they were looking for",
+  "WhatsApp messages ready to send",
+  "A daily list of follow-ups, payments and reorders",
+  "Orders and M-Pesa payments recorded in a couple of taps",
+  "Works on your phone, like an app",
+];
+
 export const PLANS: Plan[] = [
   {
     id: "starter",

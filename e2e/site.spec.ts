@@ -43,3 +43,17 @@ test("pages hydrate cleanly for people who asked for reduced motion", async ({ b
   expect(errors).toEqual([]);
   await ctx.close();
 });
+
+test("the workspace preview opens each person's ready message", async ({ page }) => {
+  await page.goto("/#after");
+  const ws = page.locator("#after");
+  await expect(ws.getByText(/Habari Sarah! It's about time for your next/)).toBeVisible();
+  await ws.getByRole("button", { name: /Achieng/ }).click();
+  await expect(ws.getByText(/just a quick reminder about your order of KES 7,800/)).toBeVisible();
+});
+
+test("the offer leads straight to checkout", async ({ page }) => {
+  await page.goto("/#pricing");
+  await page.locator("#pricing").getByRole("link", { name: "Claim your page now" }).click();
+  await expect(page).toHaveURL(/\/start\?plan=starter/);
+});
