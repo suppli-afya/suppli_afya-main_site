@@ -14,12 +14,24 @@ const THREAD: { from: "them" | "you" | "gap"; text: string; time?: string }[] = 
   { from: "you", text: "Hi, still interested?" },
 ];
 
-/** What happens to most enquiries today, one line each so it can be read at a glance. */
+/** A normal day selling on WhatsApp, and where it leaks. The process, not the person. */
 const LEAKS = [
-  { title: "You answer the same questions by hand", body: "What they're looking for, what they've tried, whether they take any medicine." },
-  { title: "You send photos and price lists", body: "They compare on their own and say they'll think about it." },
-  { title: "The chat waits while you're busy", body: "Delivering, at work, asleep. By the time you reply, they've moved on." },
-  { title: "Nobody remembers to follow up", body: "There's no list of who asked, so it never looks like a lost sale. Just a slow month." },
+  {
+    title: "Every enquiry starts from zero",
+    body: "Someone asks which one they should take, and you work it out with them in the chat: what they're looking for, what they've tried, whether they take any medicine.",
+  },
+  {
+    title: "They're left to compare on their own",
+    body: "You send product photos, prices and explanations. The customer has to weigh it all up alone, and often says they'll think about it.",
+  },
+  {
+    title: "Chats wait while you're busy",
+    body: "You're delivering an order, at work or with family. By the time you reply, the moment has passed.",
+  },
+  {
+    title: "Nobody keeps a record of who asked",
+    body: "Interest is spread across chats, so follow-ups and reorders are easy to miss. It never looks like a lost sale, just a slow month.",
+  },
 ];
 
 export function Problem() {
@@ -29,21 +41,20 @@ export function Problem() {
         <div>
           <Reveal>
             <div className="eyebrow">How it usually goes</div>
-            <h2 className="display-lg mt-5 max-w-[16ch] text-ink">“Which one should I take?” is where most sales get lost</h2>
+            <h2 className="display-lg mt-5 max-w-[16ch] text-ink">Where Sales Get Lost</h2>
+            <p className="lede mt-6 max-w-[34rem]">
+              It usually starts with “Which one should I take?” Selling on WhatsApp works, but every enquiry depends on you
+              being free to answer it, and nothing keeps track of who asked.
+            </p>
           </Reveal>
-          <ol className="mt-10 grid gap-5">
+          <ul className="mt-10 max-w-[34rem] divide-y divide-ink/10 border-y border-ink/10">
             {LEAKS.map((l, i) => (
-              <Reveal as="li" key={l.title} delay={0.04 * i} className="grid grid-cols-[2rem_1fr] gap-4">
-                <span className="mt-0.5 grid h-7 w-7 place-items-center rounded-full border border-clay/40 text-[0.8rem] font-semibold text-clay">
-                  {i + 1}
-                </span>
-                <div>
-                  <h3 className="text-[1.08rem] font-semibold leading-snug text-ink">{l.title}</h3>
-                  <p className="mt-0.5 text-[0.98rem] leading-relaxed text-ink-soft">{l.body}</p>
-                </div>
+              <Reveal as="li" key={l.title} delay={0.04 * i} className="py-4">
+                <h3 className="text-[1.08rem] font-semibold leading-snug text-ink">{l.title}</h3>
+                <p className="mt-1 text-[0.98rem] leading-relaxed text-ink-soft">{l.body}</p>
               </Reveal>
             ))}
-          </ol>
+          </ul>
         </div>
 
         <Reveal delay={0.1}>

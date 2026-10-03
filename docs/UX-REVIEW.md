@@ -203,3 +203,34 @@ trust facts and the FAQ. The phone page went from 28 screens to about 15, deskto
 
 No testimonial was written for this pass. A made-up quote would break the site's own rule and the
 trust it's trying to build; the slot is ready for a real one.
+
+## Seventh pass: reading it as a distributor would
+
+The structure held up; the details didn't all. Read cold, as a distributor deciding whether to pay:
+
+| Problem | Change |
+|---|---|
+| The workspace came after the demo, so you were asked to try it before seeing everything you'd pay for | It follows "How it works" directly: get the sale, keep the customer, then try it, then the price |
+| The hero sold the page but not the follow-up, which is why the subscription is worth keeping | One more sentence: "Then you're reminded who to follow up, and when they're due to reorder" |
+| "Don't take our word for it" read like a sales cliché | "Try it the way your customers will" |
+| "Where most sales get lost" and "What distributors usually ask" implied numbers and users we don't have yet | "Where sales get lost" and "Questions before you start" |
+| The problems were numbered 1 to 4 right before the steps numbered 1 to 3, so they read like steps | A plain divided list |
+| A large empty dark area sat beside the demo phone | The four trust points fill that column |
+| The workspace headline ("And it remembers every customer") didn't say what "it" was, and pricing then sold a "workspace" nobody had named | "Your workspace remembers every customer" |
+| The hero's price line could wrap with a separator left dangling on phones | Two tidy lines on phones, one on wider screens |
+
+**Follow-up.** Step 1 of "How it works" shows Kate's printable QR card again (`QrCard size="sm"`), the
+design the earlier homepage used; its QR code really opens her page. Step 2 explains each product by
+what Sarah said ("Because you said your energy is low and dips mid-afternoon"), and `story.test.ts`
+checks those words against her actual answers.
+
+## Eighth pass: the founder's copy
+
+A copy pass on the same seven sections, read as one story: Turn Curiosity Into Customers → Where
+Sales Get Lost → Share a Link. They Get a Plan. You Close the Sale. → See It in Action → Know Who
+Needs You Next → What Distributors Usually Ask → Your Page Can Be Live This Afternoon. "See it in
+action" comes before the workspace again, in that order. Headings use the founder's capitalisation;
+supporting text stays in sentence case. The problem section describes the process, not the person.
+The FAQ answers the nine practical questions distributors raise (selling the same way, customers
+staying theirs, direct WhatsApp, payment, stopping, the 50-customer limit, medical advice, phones).
+Pricing names Starter as the place to start, with Growth and Pro as two small options beneath it.
